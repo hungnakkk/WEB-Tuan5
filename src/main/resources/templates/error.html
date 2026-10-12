@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Có lỗi xảy ra')}"></head>
+<body>
+<nav th:replace="~{fragments :: navbar}"></nav>
+<div class="container">
+    <div class="alert alert-danger">
+        <h4 class="alert-heading">Rất tiếc!</h4>
+        <p th:text="${message != null} ? ${message} : 'Trang bạn tìm không tồn tại hoặc đã có lỗi xảy ra.'"></p>
+    </div>
+    <a class="btn btn-primary" th:href="@{/courses}">Về danh sách khóa học</a>
+</div>
+</body>
+</html>

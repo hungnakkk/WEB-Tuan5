@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(${title})}"></head>
+<body>
+<nav th:replace="~{fragments :: navbar}"></nav>
+<div class="container" style="max-width:640px">
+    <h3 th:text="${title}"></h3>
+    <form method="post" th:action="@{${action}}" th:object="${category}">
+        <div class="mb-3">
+            <label class="form-label">Tên loại khóa học</label>
+            <input type="text" th:field="*{name}" class="form-control">
+            <div class="text-danger small" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Mô tả</label>
+            <textarea th:field="*{description}" class="form-control" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Lưu</button>
+        <a class="btn btn-secondary" th:href="@{/categories}">Quay lại</a>
+    </form>
+</div>
+</body>
+</html>

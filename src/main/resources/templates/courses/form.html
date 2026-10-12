@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(${title})}"></head>
+<body>
+<nav th:replace="~{fragments :: navbar}"></nav>
+<div class="container" style="max-width:720px">
+    <h3 th:text="${title}"></h3>
+
+    <div th:if="${#lists.isEmpty(categories)}" class="alert alert-warning">
+        Chưa có loại khóa học nào. Vui lòng <a th:href="@{/categories/create}">tạo loại khóa học</a> trước.
+    </div>
+
+    <form method="post" th:action="@{${action}}" th:object="${course}">
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">Dữ liệu chưa hợp lệ, vui lòng kiểm tra lại các trường bên dưới.</div>
+
+        <div class="mb-3">
+            <label class="form-label">Tên khóa học</label>
+            <input type="text" th:field="*{name}" class="form-control">
+            <div class="text-danger small" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Loại khóa học</label>
+            <select th:field="*{courseCategoryId}" class="form-select">
+                <option value="">-- Chọn loại khóa học --</option>
+                <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
+            </select>
+            <div class="text-danger small" th:if="${#fields.hasErrors('courseCategoryId')}" th:errors="*{courseCategoryId}"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Học phí (VNĐ)</label>
+                <input type="text" th:field="*{tuitionFee}" class="form-control">
+                <div class="text-danger small" th:if="${#fields.hasErrors('tuitionFee')}" th:errors="*{tuitionFee}"></div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Thời lượng (giờ)</label>
+                <input type="text" th:field="*{duration}" class="form-control">
+                <div class="text-danger small" th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></div>
+            </div>
+        </div>
+
+        <div class="form-check mb-3">
+            <input type="checkbox" th:field="*{active}" class="form-check-input">
+            <label class="form-check-label" for="active">Đang tuyển sinh</label>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Mô tả</label>
+            <textarea th:field="*{description}" class="form-control" rows="4"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Lưu</button>
+        <a class="btn btn-secondary" th:href="@{/courses}">Quay lại</a>
+    </form>
+</div>
+</body>
+</html>
